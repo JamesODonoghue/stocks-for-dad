@@ -38,14 +38,14 @@ export default function StockManagementPage() {
   // tRPC hooks
   const { data: savedStocks, refetch } = api.stock.getAll.useQuery();
   const createStock = api.stock.create.useMutation({
-    onSuccess: () => {
-      refetch();
+    onSuccess: async () => {
+      await refetch();
       setSelectedStock(null);
       setSearchQuery("");
     },
   });
   const deleteStock = api.stock.delete.useMutation({
-    onSuccess: () => refetch(),
+    onSuccess: async () => await refetch(),
   });
 
   // Filter stocks based on search query
@@ -56,7 +56,7 @@ export default function StockManagementPage() {
   );
 
   // Get saved stock symbols for filtering
-  const savedSymbols = new Set(savedStocks?.map((stock) => stock.symbol) || []);
+  const savedSymbols = new Set(savedStocks?.map((stock) => stock.symbol) ?? []);
 
   const handleAddStock = () => {
     if (selectedStock) {
@@ -130,7 +130,7 @@ export default function StockManagementPage() {
                   ))
                 ) : (
                   <div className="p-4 text-center text-gray-500">
-                    No stocks found matching "{searchQuery}"
+                    No stocks found matching {searchQuery}
                   </div>
                 )}
               </div>
@@ -168,7 +168,7 @@ export default function StockManagementPage() {
           {/* Saved Stocks Section */}
           <div className="rounded-lg bg-white p-6 shadow-md">
             <h2 className="mb-4 text-xl font-semibold text-gray-800">
-              My Stocks ({savedStocks?.length || 0})
+              My Stocks ({savedStocks?.length ?? 0})
             </h2>
 
             <div className="max-h-96 space-y-3 overflow-y-auto">
