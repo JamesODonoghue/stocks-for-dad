@@ -10,7 +10,7 @@ const config = {
     return [
       {
         source: "/",
-        destination: "/games/new",
+        destination: "/stocks",
         permanent: true,
       },
     ];

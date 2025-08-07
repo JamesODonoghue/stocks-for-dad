@@ -26,7 +26,6 @@ export default function RootLayout({
     <TRPCReactProvider>
       <html lang="en">
         <body className={`dark font-sans ${inter.variable} gap-8`}>
-          <Navbar></Navbar>
           {children}
           <SpeedInsights />
           <Analytics />
